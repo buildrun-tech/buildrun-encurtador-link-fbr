@@ -1,0 +1,192 @@
+<mxfile host="Electron" modified="2025-04-15T00:18:03.353Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="rf-bY--yfPRJdfMg1CAb" version="24.2.5" type="device" pages="2">
+  <diagram name="Entities" id="D0Vt3sk_aAV0w3R8rFnb">
+    <mxGraphModel dx="1075" dy="1636" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-1" value="User" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="360" width="140" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-2" value="user_id: uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-1">
+          <mxGeometry y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-3" value="email: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-1">
+          <mxGeometry y="60" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-4" value="password: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-1">
+          <mxGeometry y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-13" value="nickname: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-1">
+          <mxGeometry y="120" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-44" value="updatedAt: datetime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-1">
+          <mxGeometry y="150" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-43" value="createdAt: datetime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-1">
+          <mxGeometry y="180" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-12" value="SaaS - Encurtador de Link" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="270" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="RAfrC8C_ng3B-LZDRQAI-14" target="RAfrC8C_ng3B-LZDRQAI-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="460" />
+              <mxPoint x="340" y="435" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-14" value="Link" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="340" width="180" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-15" value="link_id: uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="30" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-39" value="link_type: enum (url / qrcode)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="60" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-71" value="uniqueLinkSlug: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="90" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-16" value="originalUrl: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="120" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-17" value="utmSource: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="150" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-18" value="utmMedium: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="180" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-26" value="utmCampaign: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="210" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-36" value="fk_user_id: uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="240" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-38" value="active: boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="270" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-40" value="expirationDateTime: datetime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="300" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-41" value="createdAt: datetime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="330" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-42" value="updatedAt: datetime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry y="360" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-19" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="365" y="-148" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.003;entryY=0.479;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="RAfrC8C_ng3B-LZDRQAI-20" target="RAfrC8C_ng3B-LZDRQAI-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-20" value="Short Link&lt;div&gt;App&lt;/div&gt;" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="-158" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="RAfrC8C_ng3B-LZDRQAI-19">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="545" y="-114" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="RAfrC8C_ng3B-LZDRQAI-22">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="-68" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-22" value="short.link/{link slug}" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="430" y="-58" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-23" value="url original" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="435" y="-148" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-45" value="&lt;b&gt;Jornada 1: Geração de Link&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="385" y="-200" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-46" value="Normal User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="72" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="RAfrC8C_ng3B-LZDRQAI-48" target="RAfrC8C_ng3B-LZDRQAI-51">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580.5099999999999" y="176.3699999999999" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="605" y="183" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-48" value="Short Link&lt;div&gt;App&lt;/div&gt;" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="62" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="RAfrC8C_ng3B-LZDRQAI-46">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="545" y="106" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=-0.01;exitY=0.514;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="RAfrC8C_ng3B-LZDRQAI-51">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="152" as="targetPoint" />
+            <mxPoint x="410" y="177" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-51" value="url original" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="455" y="168" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-52" value="short.link/{link slug}" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="410" y="72" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-53" value="&lt;b&gt;Jornada 2: Utilização de Link&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="395" y="30" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="RAfrC8C_ng3B-LZDRQAI-56" target="RAfrC8C_ng3B-LZDRQAI-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="440" />
+              <mxPoint x="640" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-56" value="Link Click Metadata" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="380" width="180" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-57" value="link_id: uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-56">
+          <mxGeometry y="30" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-65" value="ipAddress: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-56">
+          <mxGeometry y="60" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-70" value="userAgent: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-56">
+          <mxGeometry y="90" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-66" value="clickedAt: datetime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RAfrC8C_ng3B-LZDRQAI-56">
+          <mxGeometry y="120" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RAfrC8C_ng3B-LZDRQAI-69" value="&lt;b&gt;Analítica Funcional&lt;/b&gt;&lt;div&gt;- Total de cliques em um link (select count* com possibilidade de cache)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Distribuição de cliques por dia em um período de data (1 semana / 1 mes / etc)&lt;/div&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="970" y="340" width="220" height="90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="RdqyUMrz5SGAAePA0t1W" name="AWS">
+    <mxGraphModel dx="890" dy="443" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="fyAHRvlndzVkZ6DGR3sf-1" value="Aplicação é Heavy Write ou Heavy Read?&lt;div&gt;&lt;b&gt;R: Heavy Read&lt;/b&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="260" y="80" width="250" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w0QH7csucHk5M4Zi2Mu2-1" value="Padrão de acesso é regular ou esporádico?&lt;div&gt;&lt;b&gt;R: Esporádico&lt;/b&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="260" y="130" width="260" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w0QH7csucHk5M4Zi2Mu2-2" value="&lt;b&gt;Serverless com Java&lt;/b&gt;&lt;div&gt;Riscos:&lt;/div&gt;&lt;div&gt;Cold Start 3s&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Alternativa é usar a compilação nativa Java para ter um baixo cold start (Quarkus?)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;R: Spring Boot&lt;/b&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="260" y="180" width="470" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="w0QH7csucHk5M4Zi2Mu2-3" value="JIT - Just in Time - jar" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="650" y="120" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="w0QH7csucHk5M4Zi2Mu2-4" value="AOT - Ahead of Time - binary" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="650" y="100" width="180" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
