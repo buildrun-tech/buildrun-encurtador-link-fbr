@@ -1,1 +1,7 @@
 .idea
+
+target/
+.aws-sam/
+volume/
+.$diagrama.drawio.bkp
+.$diagrama.drawio.dtmp
