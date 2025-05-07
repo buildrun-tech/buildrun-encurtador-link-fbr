@@ -26,6 +26,7 @@ public class UserEntity {
 
         entity.setUserId(user.getUserId());
         entity.setEmail(user.getEmail());
+        entity.setPassword(user.getPassword());
         entity.setNickname(user.getNickname());
         entity.setCreatedAt(user.getCreatedAt());
         entity.setUpdatedAt(user.getUpdatedAt());
