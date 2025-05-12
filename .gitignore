@@ -5,3 +5,6 @@ target/
 volume/
 .$diagrama.drawio.bkp
 .$diagrama.drawio.dtmp
+
+app.key
+app.pub

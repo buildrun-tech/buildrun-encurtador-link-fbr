@@ -14,4 +14,6 @@ aws --endpoint="http://localhost:4566" dynamodb create-table \
   --key-schema \
     "AttributeName=user_id,KeyType=HASH" \
   --provisioned-throughput \
-      "ReadCapacityUnits=5,WriteCapacityUnits=5"
+      "ReadCapacityUnits=5,WriteCapacityUnits=5" \
+  --query 'TableDescription.TableName' \
+  --output text
