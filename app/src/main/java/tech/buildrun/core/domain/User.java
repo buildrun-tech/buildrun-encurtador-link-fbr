@@ -14,6 +14,15 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public User(UUID userId, String email, String password, String nickname, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public User(String email, String password, String nickname) {
         this.userId = UUID.randomUUID();
         this.email = email;

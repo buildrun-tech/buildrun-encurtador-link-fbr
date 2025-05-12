@@ -1,6 +1,8 @@
 package tech.buildrun.adapter.in.web;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(path = "/users")
+@Validated
 public class UserControllerAdapterIn {
 
     private final CreateUserPortIn createUserPortIn;
@@ -22,7 +25,7 @@ public class UserControllerAdapterIn {
     }
 
     @PostMapping
-    public ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest req) {
+    public ResponseEntity<CreateUserResponse> createUser(@RequestBody @Valid CreateUserRequest req) {
 
         var userCreated = createUserPortIn.execute(req.toDomain());
 

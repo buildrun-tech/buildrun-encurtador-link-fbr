@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import tech.buildrun.core.domain.User;
+import tech.buildrun.core.exception.UserAlreadyExistException;
 import tech.buildrun.core.port.in.CreateUserPortIn;
 import tech.buildrun.core.port.out.UserRepositoryPortOut;
 
@@ -25,9 +26,15 @@ public class CreateUserUseCase implements CreateUserPortIn {
     @Override
     public User execute(User user) {
 
-        user.encodePassword(bCryptPasswordEncoder);
-
         logger.info("Creating user {}", user.getEmail());
+
+        var optUser = userRepositoryPortOut.findByEmail(user.getEmail());
+
+        if (optUser.isPresent()) {
+            throw new UserAlreadyExistException();
+        }
+
+        user.encodePassword(bCryptPasswordEncoder);
 
         var userCreated = userRepositoryPortOut.save(user);
 
