@@ -25,7 +25,7 @@ aws --endpoint-url="http://localhost:4566" dynamodb create-table \
         ],
         \"Projection\": {
           \"ProjectionType\": \"INCLUDE\",
-          \"NonKeyAttributes\": [\"user_id\"]
+          \"NonKeyAttributes\": [\"user_id\",\"password\"]
         },
         \"ProvisionedThroughput\": {
           \"ReadCapacityUnits\": 5,
