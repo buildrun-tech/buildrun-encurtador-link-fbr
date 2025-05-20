@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import tech.buildrun.adapter.in.web.dto.CreateUserRequest;
 import tech.buildrun.adapter.in.web.dto.CreateUserResponse;
 import tech.buildrun.core.port.in.CreateUserPortIn;
+import tech.buildrun.core.port.in.DeleteUserPortIn;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -17,9 +19,12 @@ import java.net.URI;
 public class UserControllerAdapterIn {
 
     private final CreateUserPortIn createUserPortIn;
+    private final DeleteUserPortIn deleteUserPortIn;
 
-    public UserControllerAdapterIn(CreateUserPortIn createUserPortIn) {
+    public UserControllerAdapterIn(CreateUserPortIn createUserPortIn,
+                                   DeleteUserPortIn deleteUserPortIn) {
         this.createUserPortIn = createUserPortIn;
+        this.deleteUserPortIn = deleteUserPortIn;
     }
 
     @PostMapping
@@ -30,6 +35,16 @@ public class UserControllerAdapterIn {
         var body = CreateUserResponse.fromDomain(userCreated);
 
         return ResponseEntity.created(URI.create("/")).body(body);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(JwtAuthenticationToken token) {
+
+        var userId = String.valueOf(token.getTokenAttributes().get("sub"));
+
+        deleteUserPortIn.execute(UUID.fromString(userId));
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
