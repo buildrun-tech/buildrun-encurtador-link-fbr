@@ -1,6 +1,11 @@
 package tech.buildrun.core.domain;
 
+import io.micrometer.common.util.StringUtils;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import java.time.LocalDateTime;
+
+import static tech.buildrun.config.Constants.*;
 
 public class Link {
 
@@ -56,5 +61,28 @@ public class Link {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String generateFullUrl() {
+
+        var builder = UriComponentsBuilder.fromHttpUrl(originalUrl);
+
+        if (StringUtils.isNotBlank(utmTags.getUtmSource())) {
+            builder.queryParam(UTM_SOURCE, utmTags.getUtmSource());
+        }
+
+        if (StringUtils.isNotBlank(utmTags.getUtmMedium())) {
+            builder.queryParam(UTM_MEDIUM, utmTags.getUtmMedium());
+        }
+
+        if (StringUtils.isNotBlank(utmTags.getUtmCampaign())) {
+            builder.queryParam(UTM_CAMPAIGN, utmTags.getUtmCampaign());
+        }
+
+        if (StringUtils.isNotBlank(utmTags.getUtmContent())) {
+            builder.queryParam(UTM_CONTENT, utmTags.getUtmContent());
+        }
+
+        return builder.toUriString();
     }
 }

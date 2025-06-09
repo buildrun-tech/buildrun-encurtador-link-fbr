@@ -141,10 +141,12 @@ public class LinkEntity {
         entity.setLinkId(link.getLinkId());
         entity.setOriginalUrl(link.getOriginalUrl());
 
-        entity.setUtmSource(link.getUtmTags().getUtmSource());
-        entity.setUtmMedium(link.getUtmTags().getUtmMedium());
-        entity.setUtmCampaign(link.getUtmTags().getUtmCampaign());
-        entity.setUtmContent(link.getUtmTags().getUtmContent());
+        if (link.getUtmTags() != null) {
+            entity.setUtmSource(link.getUtmTags().getUtmSource());
+            entity.setUtmMedium(link.getUtmTags().getUtmMedium());
+            entity.setUtmCampaign(link.getUtmTags().getUtmCampaign());
+            entity.setUtmContent(link.getUtmTags().getUtmContent());
+        }
 
         entity.setUserId(link.getUser().getUserId());
         entity.setActive(link.isActive());
