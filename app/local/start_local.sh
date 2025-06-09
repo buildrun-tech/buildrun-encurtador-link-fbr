@@ -1,4 +1,4 @@
-docker compose up -d
+docker compose -p linkshortener up -d
 
 # await 15s
 echo "Waiting for 15 seconds..."

@@ -2,8 +2,11 @@ package tech.buildrun.adapter.out.persistence;
 
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import org.springframework.stereotype.Component;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
 import tech.buildrun.core.domain.Link;
 import tech.buildrun.core.port.out.LinkRepositoryPortOut;
+
+import java.util.Optional;
 
 @Component
 public class LinkDynamoDbAdapterOut implements LinkRepositoryPortOut {
@@ -22,5 +25,19 @@ public class LinkDynamoDbAdapterOut implements LinkRepositoryPortOut {
         dynamoDbTemplate.save(entity);
 
         return link;
+    }
+
+    @Override
+    public Optional<Link> findById(String id) {
+
+        var key = Key.builder()
+                .partitionValue(id)
+                .build();
+
+        var entity = dynamoDbTemplate.load(key, LinkEntity.class);
+
+        return entity == null ?
+                Optional.empty() :
+                Optional.of(entity.toDomain());
     }
 }

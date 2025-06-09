@@ -3,6 +3,8 @@ package tech.buildrun.adapter.out.persistence;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 import tech.buildrun.config.TableName;
 import tech.buildrun.core.domain.Link;
+import tech.buildrun.core.domain.User;
+import tech.buildrun.core.domain.UtmTags;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -152,5 +154,18 @@ public class LinkEntity {
         entity.setUpdatedAt(link.getUpdatedAt());
 
         return entity;
+    }
+
+    public Link toDomain() {
+        return new Link(
+                linkId,
+                originalUrl,
+                new UtmTags(utmSource, utmMedium, utmCampaign, utmContent),
+                new User(userId),
+                active,
+                expirationDateTime,
+                createdAt,
+                updatedAt
+        );
     }
 }

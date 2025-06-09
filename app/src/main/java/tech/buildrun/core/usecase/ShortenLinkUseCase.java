@@ -3,6 +3,7 @@ package tech.buildrun.core.usecase;
 import org.springframework.stereotype.Component;
 import tech.buildrun.adapter.in.web.dto.ShortenLinkResponse;
 import tech.buildrun.core.domain.Link;
+import tech.buildrun.core.exception.LinkAlreadyExistException;
 import tech.buildrun.core.port.in.ShortenLinkPortIn;
 import tech.buildrun.core.port.out.LinkRepositoryPortOut;
 
@@ -18,7 +19,11 @@ public class ShortenLinkUseCase implements ShortenLinkPortIn {
     @Override
     public ShortenLinkResponse execute(Link link) {
 
-        // TODO - validar se ja existe um link pelo ID
+        var linkOpt = linkRepositoryPortOut.findById(link.getLinkId());
+
+        if (linkOpt.isPresent()) {
+            throw new LinkAlreadyExistException();
+        }
 
         linkRepositoryPortOut.save(link);
 
