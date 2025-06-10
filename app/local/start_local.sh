@@ -73,3 +73,10 @@ aws --endpoint-url="http://localhost:4566" dynamodb create-table \
     --query 'TableDescription.TableName' \
     --output text
 
+# Create SQS Fifo Update Count
+aws --endpoint-url="http://localhost:4566" sqs create-queue \
+  --region "sa-east-1" \
+  --queue-name update-count-link.fifo \
+  --attributes '{
+    "FifoQueue": "true"
+  }'
