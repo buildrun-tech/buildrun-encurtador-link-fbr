@@ -73,10 +73,16 @@ aws --endpoint-url="http://localhost:4566" dynamodb create-table \
     --query 'TableDescription.TableName' \
     --output text
 
-# Create SQS Fifo Update Count
-aws --endpoint-url="http://localhost:4566" sqs create-queue \
+## Create Links Analytics table
+aws --endpoint-url="http://localhost:4566" dynamodb create-table \
   --region "sa-east-1" \
-  --queue-name update-count-link.fifo \
-  --attributes '{
-    "FifoQueue": "true"
-  }'
+  --table-name tb_links_analytics \
+  --attribute-definitions \
+    AttributeName=link_id,AttributeType=S \
+    AttributeName=date,AttributeType=S \
+  --key-schema \
+    AttributeName=link_id,KeyType=HASH \
+    AttributeName=date,KeyType=RANGE \
+  --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+  --query 'TableDescription.TableName' \
+  --output text

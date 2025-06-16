@@ -3,19 +3,19 @@ package tech.buildrun.core.usecase;
 import org.springframework.stereotype.Component;
 import tech.buildrun.core.exception.LinkNotFoundException;
 import tech.buildrun.core.port.in.RedirectPortIn;
-import tech.buildrun.core.port.out.LinkMessagingPortOut;
+import tech.buildrun.core.port.out.AnalyticsRepositoryPortOut;
 import tech.buildrun.core.port.out.LinkRepositoryPortOut;
 
 @Component
 public class RedirectUseCase implements RedirectPortIn {
 
     private final LinkRepositoryPortOut linkRepositoryPortOut;
-    private final LinkMessagingPortOut linkMessagingPortOut;
+    private final AnalyticsRepositoryPortOut analyticsRepositoryPortOut;
 
     public RedirectUseCase(LinkRepositoryPortOut linkRepositoryPortOut,
-                           LinkMessagingPortOut linkMessagingPortOut) {
+                           AnalyticsRepositoryPortOut analyticsRepositoryPortOut) {
         this.linkRepositoryPortOut = linkRepositoryPortOut;
-        this.linkMessagingPortOut = linkMessagingPortOut;
+        this.analyticsRepositoryPortOut = analyticsRepositoryPortOut;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class RedirectUseCase implements RedirectPortIn {
         var link = linkRepositoryPortOut.findById(linkId)
                 .orElseThrow(LinkNotFoundException::new);
 
-        linkMessagingPortOut.publishUpdateLinkCount(link);
+        analyticsRepositoryPortOut.updateClickCount(link);
 
         return link.generateFullUrl();
     }
