@@ -6,6 +6,8 @@ import tech.buildrun.core.port.in.RedirectPortIn;
 import tech.buildrun.core.port.out.AnalyticsRepositoryPortOut;
 import tech.buildrun.core.port.out.LinkRepositoryPortOut;
 
+import java.time.LocalDateTime;
+
 @Component
 public class RedirectUseCase implements RedirectPortIn {
 
@@ -23,6 +25,14 @@ public class RedirectUseCase implements RedirectPortIn {
 
         var link = linkRepositoryPortOut.findById(linkId)
                 .orElseThrow(LinkNotFoundException::new);
+
+        if (!link.isActive()) {
+            throw new LinkNotFoundException();
+        }
+
+        if (link.getExpirationDateTime().isBefore(LocalDateTime.now())) {
+            throw new LinkNotFoundException();
+        }
 
         analyticsRepositoryPortOut.updateClickCount(link);
 
