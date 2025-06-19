@@ -78,6 +78,7 @@ Ensure app.key and app.pub are present before starting the application.
 
 A convenience script is provided to spin up the local environment using Docker and AWS SAM:
 
+### 1. First Step
 ```bash
 cd app/docker/local
 ./start_local.sh
@@ -87,6 +88,8 @@ This script will:
 
 - Start a LocalStack with DynamoDB Service
 - Wire up the environment so that all AWS calls target the local emulator
+
+### 2. Second Step
 
 ```bash
 cd app/docker/local
