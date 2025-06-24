@@ -9,8 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import tech.buildrun.adapter.in.web.dto.ApiResponse;
+import tech.buildrun.adapter.in.web.dto.LinkResponse;
 import tech.buildrun.adapter.in.web.dto.ShortenLinkRequest;
 import tech.buildrun.adapter.in.web.dto.ShortenLinkResponse;
+import tech.buildrun.core.port.in.MyLinksPortIn;
 import tech.buildrun.core.port.in.RedirectPortIn;
 import tech.buildrun.core.port.in.ShortenLinkPortIn;
 
@@ -25,11 +28,14 @@ public class LinkControllerAdapterIn {
 
     private final ShortenLinkPortIn shortenLinkPortIn;
     private final RedirectPortIn redirectPortIn;
+    private final MyLinksPortIn myLinksPortIn;
 
     public LinkControllerAdapterIn(ShortenLinkPortIn shortenLinkPortIn,
-                                   RedirectPortIn redirectPortIn) {
+                                   RedirectPortIn redirectPortIn,
+                                   MyLinksPortIn myLinksPortIn) {
         this.shortenLinkPortIn = shortenLinkPortIn;
         this.redirectPortIn = redirectPortIn;
+        this.myLinksPortIn = myLinksPortIn;
     }
 
     @PostMapping(value = "/links")
@@ -57,6 +63,23 @@ public class LinkControllerAdapterIn {
         headers.setLocation(URI.create(fullUrl));
 
         return ResponseEntity.status(HttpStatus.FOUND).headers(headers).build();
+    }
+
+    @GetMapping(value = "/links")
+    public ResponseEntity<ApiResponse<LinkResponse>> userLinks(@RequestParam(name = "nextToken", defaultValue = "") String nextToken,
+                                                               @RequestParam(name = "limit", defaultValue = "3") Integer limit,
+                                                               JwtAuthenticationToken token) {
+
+        var userId = String.valueOf(token.getTokenAttributes().get("sub"));
+
+        var body = myLinksPortIn.execute(userId, nextToken, limit);
+
+        return ResponseEntity.ok(
+            new ApiResponse<>(
+                    body.items().stream().map(LinkResponse::fromDomain).toList(),
+                    body.nextToken()
+            )
+        );
     }
 
 }
