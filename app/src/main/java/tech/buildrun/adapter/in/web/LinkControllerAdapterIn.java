@@ -13,11 +13,13 @@ import tech.buildrun.adapter.in.web.dto.ApiResponse;
 import tech.buildrun.adapter.in.web.dto.LinkResponse;
 import tech.buildrun.adapter.in.web.dto.ShortenLinkRequest;
 import tech.buildrun.adapter.in.web.dto.ShortenLinkResponse;
+import tech.buildrun.core.domain.LinkFilter;
 import tech.buildrun.core.port.in.MyLinksPortIn;
 import tech.buildrun.core.port.in.RedirectPortIn;
 import tech.buildrun.core.port.in.ShortenLinkPortIn;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
@@ -68,11 +70,14 @@ public class LinkControllerAdapterIn {
     @GetMapping(value = "/links")
     public ResponseEntity<ApiResponse<LinkResponse>> userLinks(@RequestParam(name = "nextToken", defaultValue = "") String nextToken,
                                                                @RequestParam(name = "limit", defaultValue = "3") Integer limit,
+                                                               @RequestParam(name = "active", required = false) Boolean active,
+                                                               @RequestParam(name = "startCreatedAt", required = false) LocalDate startCreatedAt,
+                                                               @RequestParam(name = "endCreatedAt", required = false) LocalDate endCreatedAt,
                                                                JwtAuthenticationToken token) {
 
         var userId = String.valueOf(token.getTokenAttributes().get("sub"));
 
-        var body = myLinksPortIn.execute(userId, nextToken, limit);
+        var body = myLinksPortIn.execute(userId, nextToken, limit, new LinkFilter(active, startCreatedAt, endCreatedAt));
 
         return ResponseEntity.ok(
             new ApiResponse<>(

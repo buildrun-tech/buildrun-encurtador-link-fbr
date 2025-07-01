@@ -2,6 +2,7 @@ package tech.buildrun.core.usecase;
 
 import org.springframework.stereotype.Component;
 import tech.buildrun.core.domain.Link;
+import tech.buildrun.core.domain.LinkFilter;
 import tech.buildrun.core.domain.PaginatedResult;
 import tech.buildrun.core.port.in.MyLinksPortIn;
 import tech.buildrun.core.port.out.LinkRepositoryPortOut;
@@ -18,10 +19,16 @@ public class MyLinksUseCase implements MyLinksPortIn {
     @Override
     public PaginatedResult<Link> execute(String userId,
                                          String nextToken,
-                                         int limit) {
+                                         int limit,
+                                         LinkFilter filters) {
 
-        return linkRepositoryPortOut.findAllByUserId(userId,
+        filters.validate();
+
+        return linkRepositoryPortOut.findAllByUserId(
+                userId,
                 nextToken,
-                limit);
+                limit,
+                filters
+        );
     }
 }

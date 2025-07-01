@@ -5,9 +5,17 @@ meta {
 }
 
 get {
-  url: http://127.0.0.1:3000/links
+  url: http://127.0.0.1:3000/links?startCreatedAt=2025-06-01&endCreatedAt=2025-08-01&active=true
   body: json
   auth: bearer
+}
+
+params:query {
+  startCreatedAt: 2025-06-01
+  endCreatedAt: 2025-08-01
+  active: true
+  ~limit: 1
+  ~nextToken: eyJsaW5rSWQiOiJmYnIyIiwidXNlcklkIjoiNGQ3ZWM0OGYtM2M2MC00YTA4LWEyOTQtMTljYjFjZTM1NThlIn0=
 }
 
 auth:bearer {

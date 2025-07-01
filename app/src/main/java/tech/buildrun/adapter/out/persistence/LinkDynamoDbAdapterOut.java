@@ -2,19 +2,24 @@ package tech.buildrun.adapter.out.persistence;
 
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import org.springframework.stereotype.Component;
+import software.amazon.awssdk.enhanced.dynamodb.Expression;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.model.Page;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import tech.buildrun.adapter.out.persistence.helper.LinkDynamoDbTokenHelper;
 import tech.buildrun.core.domain.Link;
+import tech.buildrun.core.domain.LinkFilter;
 import tech.buildrun.core.domain.PaginatedResult;
 import tech.buildrun.core.port.out.LinkRepositoryPortOut;
 
-import java.util.Collections;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
 import static tech.buildrun.config.Constants.FK_TB_USERS_LINK_USER_INDEX;
 
 @Component
@@ -54,7 +59,10 @@ public class LinkDynamoDbAdapterOut implements LinkRepositoryPortOut {
     }
 
     @Override
-    public PaginatedResult<Link> findAllByUserId(String userId, String nextToken, int limit) {
+    public PaginatedResult<Link> findAllByUserId(String userId,
+                                                 String nextToken,
+                                                 int limit,
+                                                 LinkFilter filters) {
 
         QueryConditional qc = QueryConditional.keyEqualTo(
                 Key.builder()
@@ -62,9 +70,30 @@ public class LinkDynamoDbAdapterOut implements LinkRepositoryPortOut {
                         .build()
         );
 
+        List<String> conditions = new ArrayList<>();
+        Map<String, AttributeValue> expValues = new HashMap<>();
+
+        if (!isNull(filters.active())) {
+            conditions.add("active = :activeValue");
+            expValues.put(":activeValue", AttributeValue.fromBool(filters.active()));
+        }
+
+        if (!isNull(filters.startCreatedAt()) && !isNull(filters.endCreatedAt())) {
+            conditions.add("created_at BETWEEN :startCreatedAt AND :endCreatedAt");
+            expValues.put(":startCreatedAt", AttributeValue.fromS(LocalDateTime.of(filters.startCreatedAt(), LocalTime.MIN).toString()));
+            expValues.put(":endCreatedAt", AttributeValue.fromS(LocalDateTime.of(filters.endCreatedAt(), LocalTime.MAX).toString()));
+        }
+
         QueryEnhancedRequest.Builder requestBuilder = QueryEnhancedRequest.builder()
                 .queryConditional(qc)
                 .limit(limit);
+
+        if (!conditions.isEmpty()) {
+            requestBuilder.filterExpression(Expression.builder()
+                            .expression(String.join(" AND ", conditions))
+                            .expressionValues(expValues)
+                            .build());
+        }
 
         if (nextToken != null && !nextToken.isEmpty()) {
             var map = tokenHelper.decodeStartToken(nextToken);
