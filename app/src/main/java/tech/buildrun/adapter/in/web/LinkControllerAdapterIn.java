@@ -9,11 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import tech.buildrun.adapter.in.web.dto.ApiResponse;
-import tech.buildrun.adapter.in.web.dto.LinkResponse;
-import tech.buildrun.adapter.in.web.dto.ShortenLinkRequest;
-import tech.buildrun.adapter.in.web.dto.ShortenLinkResponse;
+import tech.buildrun.adapter.in.web.dto.*;
 import tech.buildrun.core.domain.LinkFilter;
+import tech.buildrun.core.port.in.LinkAnalyticsPortIn;
 import tech.buildrun.core.port.in.MyLinksPortIn;
 import tech.buildrun.core.port.in.RedirectPortIn;
 import tech.buildrun.core.port.in.ShortenLinkPortIn;
@@ -30,13 +28,16 @@ public class LinkControllerAdapterIn {
 
     private final ShortenLinkPortIn shortenLinkPortIn;
     private final RedirectPortIn redirectPortIn;
+    private final LinkAnalyticsPortIn linkAnalyticsPortIn;
     private final MyLinksPortIn myLinksPortIn;
 
     public LinkControllerAdapterIn(ShortenLinkPortIn shortenLinkPortIn,
                                    RedirectPortIn redirectPortIn,
+                                   LinkAnalyticsPortIn linkAnalyticsPortIn,
                                    MyLinksPortIn myLinksPortIn) {
         this.shortenLinkPortIn = shortenLinkPortIn;
         this.redirectPortIn = redirectPortIn;
+        this.linkAnalyticsPortIn = linkAnalyticsPortIn;
         this.myLinksPortIn = myLinksPortIn;
     }
 
@@ -85,6 +86,19 @@ public class LinkControllerAdapterIn {
                     body.nextToken()
             )
         );
+    }
+
+    @GetMapping(value = "/links/{linkId}/analytics")
+    public ResponseEntity<AnalyticsResponse> linkAnalytics(@PathVariable("linkId") String linkId,
+                                                           @RequestParam(name = "startDate") LocalDate startDate,
+                                                           @RequestParam(name = "endDate") LocalDate endDate,
+                                                           JwtAuthenticationToken token) {
+
+        var userId = String.valueOf(token.getTokenAttributes().get("sub"));
+
+        var body = linkAnalyticsPortIn.execute(userId, linkId, startDate, endDate);
+
+        return ResponseEntity.ok(body);
     }
 
 }

@@ -4,6 +4,7 @@ import io.micrometer.common.util.StringUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static tech.buildrun.config.Constants.*;
 
@@ -84,5 +85,9 @@ public class Link {
         }
 
         return builder.toUriString();
+    }
+
+    public boolean isUserOwner(UUID userId) {
+        return this.user.getUserId().equals(userId);
     }
 }

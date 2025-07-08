@@ -7,9 +7,12 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
 import tech.buildrun.config.TableName;
 import tech.buildrun.core.domain.Link;
+import tech.buildrun.core.domain.LinkAnalytics;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @DynamoDbBean
 @TableName(name = "tb_links_analytics")
@@ -71,5 +74,14 @@ public class LinkAnalyticsEntity {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public LinkAnalytics toDomain() {
+        return new LinkAnalytics(
+                linkId,
+                date,
+                Long.valueOf(clicks),
+                LocalDateTime.ofInstant(updatedAt, ZoneId.systemDefault())
+        );
     }
 }
