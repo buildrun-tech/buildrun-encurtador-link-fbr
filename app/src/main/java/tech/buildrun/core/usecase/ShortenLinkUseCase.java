@@ -1,7 +1,6 @@
 package tech.buildrun.core.usecase;
 
 import org.springframework.stereotype.Component;
-import tech.buildrun.adapter.in.web.dto.ShortenLinkResponse;
 import tech.buildrun.core.domain.Link;
 import tech.buildrun.core.exception.LinkAlreadyExistException;
 import tech.buildrun.core.port.in.ShortenLinkPortIn;
@@ -17,7 +16,7 @@ public class ShortenLinkUseCase implements ShortenLinkPortIn {
     }
 
     @Override
-    public ShortenLinkResponse execute(Link link) {
+    public String execute(Link link) {
 
         var linkOpt = linkRepositoryPortOut.findById(link.getLinkId());
 
@@ -27,6 +26,6 @@ public class ShortenLinkUseCase implements ShortenLinkPortIn {
 
         linkRepositoryPortOut.save(link);
 
-        return new ShortenLinkResponse("http://localhost:3000/" + link.getLinkId());
+        return link.getLinkId();
     }
 }

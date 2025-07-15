@@ -1,19 +1,19 @@
 meta {
-  name: My Links
+  name: User Links
   type: http
   seq: 7
 }
 
 get {
-  url: http://127.0.0.1:3000/links?startCreatedAt=2025-06-01&endCreatedAt=2025-08-01&active=true
+  url: http://127.0.0.1:3000/links
   body: json
   auth: bearer
 }
 
 params:query {
-  startCreatedAt: 2025-06-01
-  endCreatedAt: 2025-08-01
-  active: true
+  ~startCreatedAt: 2025-06-01
+  ~endCreatedAt: 2025-08-01
+  ~active: true
   ~limit: 1
   ~nextToken: eyJsaW5rSWQiOiJmYnIyIiwidXNlcklkIjoiNGQ3ZWM0OGYtM2M2MC00YTA4LWEyOTQtMTljYjFjZTM1NThlIn0=
 }

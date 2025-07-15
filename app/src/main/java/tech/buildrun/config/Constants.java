@@ -9,4 +9,6 @@ public class Constants {
     public static final String UTM_MEDIUM = "utm_medium";
     public static final String UTM_CONTENT = "utm_content";
     public static final String UTM_CAMPAIGN = "utm_campaign";
+
+    public static final String JWT_EMAIL_CLAIM = "email";
 }

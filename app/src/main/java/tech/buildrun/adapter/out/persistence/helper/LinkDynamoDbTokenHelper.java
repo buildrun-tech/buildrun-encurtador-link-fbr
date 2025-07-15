@@ -8,6 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Map;
 
+import static tech.buildrun.adapter.out.persistence.DynamoDbAttributeConstants.LINK_ID;
+import static tech.buildrun.adapter.out.persistence.DynamoDbAttributeConstants.LINK_USER_ID;
+
 @Component
 public class LinkDynamoDbTokenHelper {
 
@@ -19,11 +22,13 @@ public class LinkDynamoDbTokenHelper {
 
     public String encodeStartToken(Map<String, AttributeValue> key) {
         try {
-            var dto = new TokenDto(key.get("link_id").s(), key.get("user_id").s());
+            var dto = new TokenDto(key.get(LINK_ID).s(), key.get(LINK_USER_ID).s());
 
             String json = mapper.writeValueAsString(dto);
 
-            return Base64.getEncoder().encodeToString(json.getBytes(StandardCharsets.UTF_8));
+            return Base64.getEncoder()
+                    .encodeToString(json.getBytes(StandardCharsets.UTF_8));
+
         } catch (Exception e) {
             throw new RuntimeException("Failed to encode start token", e);
         }
@@ -38,8 +43,8 @@ public class LinkDynamoDbTokenHelper {
             var dto = mapper.readValue(json, TokenDto.class);
 
             return Map.of(
-                "user_id", AttributeValue.fromS(dto.userId()),
-                "link_id", AttributeValue.fromS(dto.linkId())
+                LINK_USER_ID, AttributeValue.fromS(dto.userId()),
+                LINK_ID, AttributeValue.fromS(dto.linkId())
             );
 
         } catch (Exception e) {

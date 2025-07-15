@@ -1,6 +1,8 @@
 package tech.buildrun.adapter.out.persistence;
 
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
@@ -17,6 +19,8 @@ import static tech.buildrun.config.Constants.EMAIL_INDEX;
 @Component
 public class UserDynamoDbAdapterOut implements UserRepositoryPortOut {
 
+    private final Logger logger = LoggerFactory.getLogger(UserDynamoDbAdapterOut.class);
+
     private final DynamoDbTemplate dynamoDbTemplate;
 
     public UserDynamoDbAdapterOut(DynamoDbTemplate dynamoDbTemplate) {
@@ -25,15 +29,22 @@ public class UserDynamoDbAdapterOut implements UserRepositoryPortOut {
 
     @Override
     public User save(User user) {
+
+        logger.debug("Start save user on DynamoDb... - {}", user);
+
         var entity = UserEntity.fromDomain(user);
 
         dynamoDbTemplate.save(entity);
+
+        logger.debug("End save user on DynamoDb! - {}", user);
 
         return user;
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
+
+        logger.debug("Start FindUserbyEmail on DynamoDb... - {}", email);
 
         var cond = QueryConditional.keyEqualTo(k ->
                 k.partitionValue(AttributeValue.builder().s(email).build())
@@ -45,24 +56,34 @@ public class UserDynamoDbAdapterOut implements UserRepositoryPortOut {
 
         var result = dynamoDbTemplate.query(query, UserEntity.class, EMAIL_INDEX);
 
-        return result.stream()
+        var opt = result.stream()
                 .flatMap(userEntityPage -> userEntityPage.items().stream())
                 .map(UserEntity::toDomain)
                 .findFirst();
+
+        logger.debug("End FindUserbyEmail on DynamoDb! - {}", email);
+
+        return opt;
     }
 
     @Override
     public void deleteById(UUID userId) {
+
+        logger.debug("Start DeleteById on DynamoDb... - {}", userId);
 
         var key = Key.builder()
                 .partitionValue(userId.toString())
                 .build();
 
         dynamoDbTemplate.delete(key, UserEntity.class);
+
+        logger.debug("End DeleteById on DynamoDb... - {}", userId);
     }
 
     @Override
     public Optional<User> findById(UUID userId) {
+
+        logger.debug("Start FindUserById on DynamoDb... - {}", userId);
 
         var key = Key.builder()
                 .partitionValue(userId.toString())
@@ -70,8 +91,12 @@ public class UserDynamoDbAdapterOut implements UserRepositoryPortOut {
 
         var entity = dynamoDbTemplate.load(key, UserEntity.class);
 
-        return entity == null ?
+        Optional<User> opt = entity == null ?
                 Optional.empty() :
                 Optional.of(entity.toDomain());
+
+        logger.debug("End FindUserById on DynamoDb... - {}", userId);
+
+        return opt;
     }
 }

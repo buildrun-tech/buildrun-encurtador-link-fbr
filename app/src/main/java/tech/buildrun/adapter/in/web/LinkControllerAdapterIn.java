@@ -1,5 +1,6 @@
 package tech.buildrun.adapter.in.web;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import tech.buildrun.adapter.in.web.dto.*;
 import tech.buildrun.core.domain.LinkFilter;
 import tech.buildrun.core.port.in.LinkAnalyticsPortIn;
-import tech.buildrun.core.port.in.MyLinksPortIn;
 import tech.buildrun.core.port.in.RedirectPortIn;
 import tech.buildrun.core.port.in.ShortenLinkPortIn;
+import tech.buildrun.core.port.in.UserLinksPortIn;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -29,31 +30,34 @@ public class LinkControllerAdapterIn {
     private final ShortenLinkPortIn shortenLinkPortIn;
     private final RedirectPortIn redirectPortIn;
     private final LinkAnalyticsPortIn linkAnalyticsPortIn;
-    private final MyLinksPortIn myLinksPortIn;
+    private final UserLinksPortIn userLinksPortIn;
 
     public LinkControllerAdapterIn(ShortenLinkPortIn shortenLinkPortIn,
                                    RedirectPortIn redirectPortIn,
                                    LinkAnalyticsPortIn linkAnalyticsPortIn,
-                                   MyLinksPortIn myLinksPortIn) {
+                                   UserLinksPortIn userLinksPortIn) {
         this.shortenLinkPortIn = shortenLinkPortIn;
         this.redirectPortIn = redirectPortIn;
         this.linkAnalyticsPortIn = linkAnalyticsPortIn;
-        this.myLinksPortIn = myLinksPortIn;
+        this.userLinksPortIn = userLinksPortIn;
     }
 
     @PostMapping(value = "/links")
     public ResponseEntity<ShortenLinkResponse> shortenLink(@RequestBody @Valid ShortenLinkRequest req,
-                                                           JwtAuthenticationToken token) {
+                                                            HttpServletRequest servletRequest,
+                                                            JwtAuthenticationToken token) {
 
         logger.info("Request {} - {}", req, token);
 
         var userId = UUID.fromString(token.getToken().getSubject());
 
-        var res = shortenLinkPortIn.execute(req.toDomain(userId));
+        var linkId = shortenLinkPortIn.execute(req.toDomain(userId));
 
-        var uri = URI.create(res.shortenUrl());
+        var redirectUrl = servletRequest.getRequestURL().toString().replace("links", linkId);
 
-        return ResponseEntity.created(uri).body(res);
+        var uri = URI.create(redirectUrl);
+
+        return ResponseEntity.created(uri).body(new ShortenLinkResponse(redirectUrl));
     }
 
     @GetMapping(value = "/{linkId}")
@@ -78,7 +82,7 @@ public class LinkControllerAdapterIn {
 
         var userId = String.valueOf(token.getTokenAttributes().get("sub"));
 
-        var body = myLinksPortIn.execute(userId, nextToken, limit, new LinkFilter(active, startCreatedAt, endCreatedAt));
+        var body = userLinksPortIn.execute(userId, nextToken, limit, new LinkFilter(active, startCreatedAt, endCreatedAt));
 
         return ResponseEntity.ok(
             new ApiResponse<>(

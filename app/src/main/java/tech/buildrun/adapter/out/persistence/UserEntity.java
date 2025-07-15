@@ -10,6 +10,7 @@ import tech.buildrun.core.domain.User;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static tech.buildrun.adapter.out.persistence.DynamoDbAttributeConstants.*;
 import static tech.buildrun.config.Constants.EMAIL_INDEX;
 
 @DynamoDbBean
@@ -40,7 +41,7 @@ public class UserEntity {
     }
 
     @DynamoDbPartitionKey
-    @DynamoDbAttribute("user_id")
+    @DynamoDbAttribute(USER_ID)
     public UUID getUserId() {
         return userId;
     }
@@ -50,7 +51,7 @@ public class UserEntity {
     }
 
     @DynamoDbSecondaryPartitionKey(indexNames = EMAIL_INDEX)
-    @DynamoDbAttribute("email")
+    @DynamoDbAttribute(USER_EMAIL)
     public String getEmail() {
         return email;
     }
@@ -59,7 +60,7 @@ public class UserEntity {
         this.email = email;
     }
 
-    @DynamoDbAttribute("password")
+    @DynamoDbAttribute(USER_PASSWORD)
     public String getPassword() {
         return password;
     }
@@ -68,7 +69,7 @@ public class UserEntity {
         this.password = password;
     }
 
-    @DynamoDbAttribute("nickname")
+    @DynamoDbAttribute(USER_NICKNAME)
     public String getNickname() {
         return nickname;
     }
@@ -77,7 +78,7 @@ public class UserEntity {
         this.nickname = nickname;
     }
 
-    @DynamoDbAttribute("created_at")
+    @DynamoDbAttribute(USER_CREATED_AT)
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -86,7 +87,7 @@ public class UserEntity {
         this.createdAt = createdAt;
     }
 
-    @DynamoDbAttribute("updated_at")
+    @DynamoDbAttribute(USER_UPDATED_AT)
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }

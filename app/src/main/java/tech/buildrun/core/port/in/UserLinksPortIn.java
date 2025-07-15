@@ -4,7 +4,7 @@ import tech.buildrun.core.domain.Link;
 import tech.buildrun.core.domain.LinkFilter;
 import tech.buildrun.core.domain.PaginatedResult;
 
-public interface MyLinksPortIn {
+public interface UserLinksPortIn {
 
     PaginatedResult<Link> execute(String uuid,
                                   String nextToken,

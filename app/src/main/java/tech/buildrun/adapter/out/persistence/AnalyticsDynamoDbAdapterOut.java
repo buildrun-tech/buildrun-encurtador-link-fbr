@@ -17,6 +17,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.String.format;
+import static tech.buildrun.adapter.out.persistence.DynamoDbAttributeConstants.*;
+
 @Component
 public class AnalyticsDynamoDbAdapterOut implements AnalyticsRepositoryPortOut {
 
@@ -54,8 +57,8 @@ public class AnalyticsDynamoDbAdapterOut implements AnalyticsRepositoryPortOut {
                                  LocalDate date) {
 
         Map<String, AttributeValue> key = Map.of(
-                "link_id", AttributeValue.fromS(entity.getLinkId()),
-                "date", AttributeValue.fromS(date.toString())
+                ANALYTICS_LINK_ID, AttributeValue.fromS(entity.getLinkId()),
+                ANALYTICS_DATE, AttributeValue.fromS(date.toString())
         );
 
         Map<String, AttributeValue> expressionValues = Map.of(
@@ -67,7 +70,7 @@ public class AnalyticsDynamoDbAdapterOut implements AnalyticsRepositoryPortOut {
         UpdateItemRequest request = UpdateItemRequest.builder()
                 .tableName("tb_links_analytics")
                 .key(key)
-                .updateExpression("SET clicks = if_not_exists(clicks, :zero) + :inc, updated_at = :now")
+                .updateExpression(format("SET %s = if_not_exists(%s, :zero) + :inc, updated_at = :now", ANALYTICS_CLICKS, ANALYTICS_CLICKS))
                 .expressionAttributeValues(expressionValues)
                 .build();
 
