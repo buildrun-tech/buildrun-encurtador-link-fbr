@@ -1,0 +1,1 @@
+bucket_name = "prod-bucket-encurtador-links-teste"

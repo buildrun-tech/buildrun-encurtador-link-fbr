@@ -1,0 +1,1 @@
+bucket_name = "dev-bucket-encurtador-links-teste"
