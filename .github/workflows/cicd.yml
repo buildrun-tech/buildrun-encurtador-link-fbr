@@ -18,6 +18,12 @@ on:
       aws-lock-dynamodb-table:
         type: string
         required: true
+      artifact-bucket:
+        type: string
+        required: true
+      ssm-param-artifact-key:
+        type: string
+        required: true
 
 jobs:
   cicd:
@@ -41,6 +47,47 @@ jobs:
           role-to-assume: ${{ inputs.aws-assume-role-arn }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ inputs.aws-region }}
+
+      - name: Setup Java
+        if: ${{ inputs.environment == 'dev' }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Cache Maven
+        if: ${{ inputs.environment == 'dev' }}
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+
+      - name: Build & Test (Maven)
+        if: ${{ inputs.environment == 'dev' }}
+        working-directory: app
+        run: |
+          mvn -B -ntp clean verify
+          JAR_PATH=$(ls target/*.zip | head -n1)
+          echo "jar_path=$JAR_PATH" >> $GITHUB_OUTPUT
+        id: build
+
+      - name: Upload JAR to S3 & store key in SSM (DEV)
+        if: ${{ inputs.environment == 'dev' }}
+        working-directory: app
+        id: publish
+        run: |
+          KEY="${{ github.event.repository.name }}/artifacts/${GITHUB_SHA}/app.zip"
+          
+          aws s3 cp "${{ steps.build.outputs.jar_path }}" "s3://${{ inputs.artifact-bucket }}/${KEY}"
+          
+          aws ssm put-parameter \
+            --name "${{ inputs.ssm-param-artifact-key }}/latest_jar_key" \
+            --value "$KEY" \
+            --type String \
+            --overwrite
+          
+          echo "s3_key=$KEY" >> $GITHUB_OUTPUT
 
       - name: Read destroy configuration
         id: read-destroy-config
