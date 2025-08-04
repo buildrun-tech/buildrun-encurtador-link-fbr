@@ -1,1 +1,10 @@
-bucket_name = "dev-bucket-encurtador-links-teste"
+env = "dev"
+region = "us-east-2"
+
+app_prefix = "encurtador-links-saas"
+
+lambda_handler = "tech.buildrun.StreamLambdaHandler::handleRequest"
+
+env_vars = {
+  "VARIABLE"= "TESTE"
+}
