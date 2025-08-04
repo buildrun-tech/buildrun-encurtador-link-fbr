@@ -89,6 +89,27 @@ jobs:
           
           echo "s3_key=$KEY" >> $GITHUB_OUTPUT
 
+      - name: Read JAR key from SSM (PROD)
+        if: ${{ inputs.environment == 'prod' }}
+        id: readkey
+        run: |
+          KEY=$(aws ssm get-parameter --name "${{ inputs.ssm-param-artifact-key }}/latest_jar_key" --query "Parameter.Value" --output text)
+          
+          echo "Promoting Key to production => $KEY"
+          
+          aws ssm put-parameter \
+            --name "${{ inputs.ssm-param-artifact-key }}/stable_jar_key" \
+            --value "$KEY" \
+            --type String \
+            --overwrite
+          
+          echo "s3_key=$KEY" >> $GITHUB_OUTPUT
+
+      - name: Export JAR vars for Terraform
+        run: |
+          echo "TF_VAR_lambda_s3_bucket=${{ inputs.artifact-bucket }}" >> $GITHUB_ENV
+          echo "TF_VAR_lambda_s3_key=${{ steps.publish.outputs.s3_key }}" >> $GITHUB_ENV
+
       - name: Read destroy configuration
         id: read-destroy-config
         run: |
