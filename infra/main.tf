@@ -21,6 +21,12 @@ module "lambda" {
   environment = var.env_vars
 }
 
+module "secret_jwt" {
+  source = "./modules/secrets_manager"
+  secret_name = "${local.name_prefix}-jwt-secret"
+  description = "Secret Manager that stores private and public jwt keys"
+}
+
 module "api" {
   source            = "./modules/api_gateway"
   name_prefix       = local.name_prefix
