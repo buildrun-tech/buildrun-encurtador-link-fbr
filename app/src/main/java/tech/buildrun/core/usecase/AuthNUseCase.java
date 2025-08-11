@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
 import tech.buildrun.adapter.in.web.dto.LoginRequest;
 import tech.buildrun.adapter.in.web.dto.LoginResponse;
-import tech.buildrun.config.JwtConfig;
+import tech.buildrun.config.AwsJwtSecretConfig;
 import tech.buildrun.core.exception.LoginException;
 import tech.buildrun.core.port.in.AuthnPortIn;
 import tech.buildrun.core.port.out.UserRepositoryPortOut;
@@ -22,12 +22,12 @@ public class AuthNUseCase implements AuthnPortIn {
     private final UserRepositoryPortOut userRepository;
     private final JwtEncoder jwtEncoder;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final JwtConfig jwtConfig;
+    private final AwsJwtSecretConfig jwtConfig;
 
     public AuthNUseCase(UserRepositoryPortOut userRepository,
                         JwtEncoder jwtEncoder,
                         BCryptPasswordEncoder bCryptPasswordEncoder,
-                        JwtConfig jwtConfig) {
+                        AwsJwtSecretConfig jwtConfig) {
         this.userRepository = userRepository;
         this.jwtEncoder = jwtEncoder;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -46,11 +46,11 @@ public class AuthNUseCase implements AuthnPortIn {
             throw new LoginException();
         }
 
-        var expiresIn = jwtConfig.getExpiresIn();
+        var expiresIn = jwtConfig.jwtExpiresIn();
 
         var claims = JwtClaimsSet.builder()
                         .subject(user.getUserId().toString())
-                        .issuer(jwtConfig.getIssuer())
+                        .issuer(jwtConfig.jwtIssuer())
                         .claim(JWT_EMAIL_CLAIM, user.getEmail())
                         .expiresAt(Instant.now().plusSeconds(expiresIn))
                         .build();
