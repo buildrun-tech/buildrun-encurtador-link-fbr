@@ -5,7 +5,9 @@ locals {
 module "iam_lambda" {
   source       = "./modules/iam_lambda"
   name_prefix  = local.name_prefix
-  dynamodb_arn = module.dynamodb.table_arn
+  dynamodb_arn = [
+    module.dynamodb_tb_users.table_arn
+  ]
   secret_arn   = module.secret_jwt.secret_arn
 }
 
@@ -39,7 +41,7 @@ module "api" {
 
 
 
-module "dynamodb_table" {
+module "dynamodb_tb_users" {
   source = "./modules/dynamodb"
 
   table_name   = "${var.env}_tb_users"
