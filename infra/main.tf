@@ -38,14 +38,10 @@ module "api" {
   timeout_ms        = 29000
 }
 
-
-
-
 module "dynamodb_tb_users" {
   source = "./modules/dynamodb"
 
   table_name   = "${var.env}_tb_users"
-  billing_mode = "PROVISIONED"
   hash_key     = "user_id"
 
   attributes = [
@@ -71,3 +67,53 @@ module "dynamodb_tb_users" {
     }
   ]
 }
+
+module "dynamodb_user_links" {
+  source = "./modules/dynamodb"
+
+  table_name   = "${var.env}_tb_user_links"
+  hash_key     = "link_id"
+
+  attributes = [
+    {
+      name = "link_id"
+      type = "S"
+    },
+    {
+      name = "user_id"
+      type = "S"
+    }
+  ]
+
+  global_secondary_indexes = [
+    {
+      name               = "fk-user-index"
+      hash_key           = "user_id"
+      range_key          = "link_id"
+      projection_type    = "ALL"
+      non_key_attributes = []   # not used for "ALL"
+      read_capacity      = 1
+      write_capacity     = 1
+    }
+  ]
+}
+
+module "dynamodb_links_analytics" {
+  source = "./modules/dynamodb"
+
+  table_name   = "${var.env}_tb_links_analytics"
+  hash_key     = "link_id"
+  range_key    = "date"
+
+  attributes = [
+    {
+      name = "link_id"
+      type = "S"
+    },
+    {
+      name = "date"
+      type = "S"
+    }
+  ]
+}
+
