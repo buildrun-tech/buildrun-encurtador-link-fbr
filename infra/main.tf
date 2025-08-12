@@ -36,16 +36,36 @@ module "api" {
   timeout_ms        = 29000
 }
 
-module "dynamodb" {
-  source       = "./modules/dynamodb"
-  table_name   = "${local.name_prefix}-links"
-  billing_mode = var.billing_mode
-  hash_key     = "id"
+
+
+
+module "dynamodb_table" {
+  source = "./modules/dynamodb"
+
+  table_name   = "${var.env}_tb_users"
+  billing_mode = "PROVISIONED"
+  hash_key     = "user_id"
 
   attributes = [
     {
-      name = "id",
+      name = "user_id"
       type = "S"
+    },
+    {
+      name = "email"
+      type = "S"
+    }
+  ]
+
+  global_secondary_indexes = [
+    {
+      name               = "email-index"
+      hash_key           = "email"
+      range_key          = null
+      projection_type    = "INCLUDE"
+      non_key_attributes = ["user_id", "password"]
+      read_capacity      = 1
+      write_capacity     = 1
     }
   ]
 }
