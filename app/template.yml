@@ -7,6 +7,7 @@ Globals:
   Function:
     Environment:
       Variables:
+        ENV: local
         SECRET_NAME: encurtador-links-saas-jwt-secret
         AWS_ACCESS_KEY_ID: fake
         AWS_SECRET_ACCESS_KEY: fake

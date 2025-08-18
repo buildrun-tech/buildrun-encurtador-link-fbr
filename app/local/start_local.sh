@@ -8,7 +8,7 @@ echo "Done waiting."
 # Create Table Users
 aws --endpoint-url="http://localhost:4566" dynamodb create-table \
   --region "sa-east-1" \
-  --table-name "tb_users" \
+  --table-name local_tb_users \
   --attribute-definitions \
     AttributeName=user_id,AttributeType=S \
     AttributeName=email,AttributeType=S \
@@ -40,7 +40,7 @@ aws --endpoint-url="http://localhost:4566" dynamodb create-table \
 
 aws --endpoint-url="http://localhost:4566" dynamodb create-table \
     --region "sa-east-1" \
-    --table-name tb_user_links \
+    --table-name local_tb_user_links \
     --attribute-definitions \
         AttributeName=link_id,AttributeType=S \
         AttributeName=user_id,AttributeType=S \
@@ -76,7 +76,7 @@ aws --endpoint-url="http://localhost:4566" dynamodb create-table \
 ## Create Links Analytics table
 aws --endpoint-url="http://localhost:4566" dynamodb create-table \
   --region "sa-east-1" \
-  --table-name tb_links_analytics \
+  --table-name local_tb_links_analytics \
   --attribute-definitions \
     AttributeName=link_id,AttributeType=S \
     AttributeName=date,AttributeType=S \

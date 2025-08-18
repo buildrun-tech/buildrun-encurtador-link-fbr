@@ -25,11 +25,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-//    private final JwtConfig jwtConfig;
     private final AwsJwtSecretConfig awsJwtSecretConfig;
 
     public SecurityConfig(AwsJwtSecretConfig awsJwtSecretConfig) {
-//        this.jwtConfig = jwtConfig;
         this.awsJwtSecretConfig = awsJwtSecretConfig;
     }
 
