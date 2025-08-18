@@ -1,11 +1,10 @@
 package tech.buildrun.config;
 
-import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
 import java.net.URI;
 
@@ -13,7 +12,8 @@ import java.net.URI;
 public class AwsConfig {
 
     @Bean
-    public DynamoDbClient dynamoDbClient() {
+    @Profile("local")
+    public DynamoDbClient dynamoDbClientLocal() {
         return DynamoDbClient.builder()
                 .endpointOverride(URI.create("http://localstack-main:4566"))
                 .region(Region.SA_EAST_1)
@@ -21,17 +21,10 @@ public class AwsConfig {
     }
 
     @Bean
-    public SqsAsyncClient sqsAsyncClient() {
-        return SqsAsyncClient.builder()
-                .endpointOverride(URI.create("http://localstack-main:4566"))
+    @Profile("!local")
+    public DynamoDbClient dynamoDbClientAws() {
+        return DynamoDbClient.builder()
                 .region(Region.SA_EAST_1)
-                .build();
-    }
-
-    @Bean
-    public SqsTemplate sqsTemplate(SqsAsyncClient sqsAsyncClient) {
-        return SqsTemplate.builder()
-                .sqsAsyncClient(sqsAsyncClient)
                 .build();
     }
 
