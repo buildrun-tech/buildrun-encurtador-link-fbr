@@ -24,7 +24,6 @@ public class AwsConfig {
     @Profile("!local")
     public DynamoDbClient dynamoDbClientAws() {
         return DynamoDbClient.builder()
-                .region(Region.SA_EAST_1)
                 .build();
     }
 
