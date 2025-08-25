@@ -30,7 +30,8 @@ public class RedirectUseCase implements RedirectPortIn {
             throw new LinkNotFoundException();
         }
 
-        if (link.getExpirationDateTime().isBefore(LocalDateTime.now())) {
+        if (link.getExpirationDateTime() != null &&
+                link.getExpirationDateTime().isBefore(LocalDateTime.now())) {
             throw new LinkNotFoundException();
         }
 
