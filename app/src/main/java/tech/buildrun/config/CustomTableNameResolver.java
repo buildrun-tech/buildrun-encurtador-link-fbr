@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-class CustomTableNameResolver implements DynamoDbTableNameResolver {
+public class CustomTableNameResolver implements DynamoDbTableNameResolver {
 
     @Value("${ENV}")
     private String env;

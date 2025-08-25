@@ -8,6 +8,7 @@ import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.UpdateItemRequest;
+import tech.buildrun.config.CustomTableNameResolver;
 import tech.buildrun.core.domain.Link;
 import tech.buildrun.core.domain.LinkAnalytics;
 import tech.buildrun.core.port.out.AnalyticsRepositoryPortOut;
@@ -25,11 +26,14 @@ public class AnalyticsDynamoDbAdapterOut implements AnalyticsRepositoryPortOut {
 
     private final DynamoDbTemplate dynamoDbTemplate;
     private final DynamoDbClient dynamoDbClient;
+    private final CustomTableNameResolver tableNameResolver;
 
     public AnalyticsDynamoDbAdapterOut(DynamoDbTemplate dynamoDbTemplate,
-                                       DynamoDbClient dynamoDbClient) {
+                                       DynamoDbClient dynamoDbClient,
+                                       CustomTableNameResolver tableNameResolver) {
         this.dynamoDbTemplate = dynamoDbTemplate;
         this.dynamoDbClient = dynamoDbClient;
+        this.tableNameResolver = tableNameResolver;
     }
 
     @Override
@@ -68,7 +72,7 @@ public class AnalyticsDynamoDbAdapterOut implements AnalyticsRepositoryPortOut {
         );
 
         UpdateItemRequest request = UpdateItemRequest.builder()
-                .tableName("tb_links_analytics")
+                .tableName(tableNameResolver.resolve(LinkAnalyticsEntity.class))
                 .key(key)
                 .updateExpression(format("SET %s = if_not_exists(%s, :zero) + :inc, updated_at = :now", ANALYTICS_CLICKS, ANALYTICS_CLICKS))
                 .expressionAttributeValues(expressionValues)

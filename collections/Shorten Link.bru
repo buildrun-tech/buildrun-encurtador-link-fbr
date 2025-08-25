@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: http://127.0.0.1:3000/links
+  url: {{url}}/links
   body: json
   auth: bearer
 }
@@ -16,13 +16,13 @@ auth:bearer {
 
 body:json {
   {
-    "uniqueLinkSlug": "fbrbruno",
+    "uniqueLinkSlug": "fbr2",
     "originalUrl": "https://www.youtube.com/@buildrun-tech",
     "utm": {
       "source": "teste",
       "medium": "youtube",
       "campaign": "fbr"
     },
-    "expirationDateTime": "2025-07-25T20:55:00"
+    "expirationDateTime": "2025-12-30T23:59:59"
   }
 }
