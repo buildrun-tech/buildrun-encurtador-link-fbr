@@ -36,6 +36,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.POST, "/bootstrap-admin").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/{linkId}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/oauth/token").permitAll()

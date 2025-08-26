@@ -7,6 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tech.buildrun.adapter.in.web.dto.CreateUserRequest;
 import tech.buildrun.adapter.in.web.dto.CreateUserResponse;
+import tech.buildrun.config.FeatureFlagConfig;
+import tech.buildrun.core.exception.ResourceNotAvailableException;
 import tech.buildrun.core.port.in.CreateUserPortIn;
 import tech.buildrun.core.port.in.DeleteUserPortIn;
 
@@ -20,15 +22,22 @@ public class UserControllerAdapterIn {
 
     private final CreateUserPortIn createUserPortIn;
     private final DeleteUserPortIn deleteUserPortIn;
+    private final FeatureFlagConfig featureFlagConfig;
 
     public UserControllerAdapterIn(CreateUserPortIn createUserPortIn,
-                                   DeleteUserPortIn deleteUserPortIn) {
+                                   DeleteUserPortIn deleteUserPortIn,
+                                   FeatureFlagConfig featureFlagConfig) {
         this.createUserPortIn = createUserPortIn;
         this.deleteUserPortIn = deleteUserPortIn;
+        this.featureFlagConfig = featureFlagConfig;
     }
 
     @PostMapping
     public ResponseEntity<CreateUserResponse> createUser(@RequestBody @Valid CreateUserRequest req) {
+
+        if (!featureFlagConfig.getCreateUsersEnabled()) {
+            throw new ResourceNotAvailableException();
+        }
 
         var userCreated = createUserPortIn.execute(req.toDomain());
 
