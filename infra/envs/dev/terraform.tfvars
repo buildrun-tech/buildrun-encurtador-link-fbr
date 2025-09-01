@@ -5,6 +5,9 @@ app_prefix = "encurtador-links-saas"
 
 lambda_handler = "tech.buildrun.StreamLambdaHandler::handleRequest"
 
+acm_domain_name_arn = "arn:aws:acm:us-east-2:311141562939:certificate/99fbcd92-6e3a-40a5-94bd-904e2ec0169f"
+domain_name = "fbr.buildrun.link"
+
 env_vars = {
   "ENV"="dev"
   "FF_CREATE_USERS"="false"

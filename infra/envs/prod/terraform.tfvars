@@ -5,6 +5,9 @@ app_prefix = "encurtador-links-saas"
 
 lambda_handler = "tech.buildrun.StreamLambdaHandler::handleRequest"
 
+acm_domain_name_arn = ""
+domain_name = ""
+
 env_vars = {
   "ENV"="prod"
   "FF_CREATE_USERS"="false"

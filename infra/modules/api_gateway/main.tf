@@ -36,3 +36,19 @@ resource "aws_lambda_permission" "apigw" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.http.execution_arn}/*/*"
 }
+
+resource "aws_apigatewayv2_domain_name" "this" {
+  domain_name = var.domain_name
+
+  domain_name_configuration {
+    certificate_arn = var.acm_domain_name_arn
+    endpoint_type   = "REGIONAL"
+    security_policy = "TLS_1_2"
+  }
+}
+
+resource "aws_apigatewayv2_api_mapping" "root" {
+  api_id      = aws_apigatewayv2_api.http.id
+  domain_name = aws_apigatewayv2_domain_name.this.domain_name
+  stage       = aws_apigatewayv2_stage.default.id
+}

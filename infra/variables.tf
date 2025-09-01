@@ -49,3 +49,11 @@ variable "env_vars" {
   type    = map(string)
   default = {}
 }
+
+variable "domain_name" {
+  type = string
+}
+
+variable "acm_domain_name_arn" {
+  type = string
+}
